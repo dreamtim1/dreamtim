@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "dreamtim"
-authors = [{name = "Timofei Ryko", email = "timofei.ryko@gmail.com"}]
+authors = [{name = "Timofei Ryko", email = "timofei.ryko@gmail.com"},]
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]

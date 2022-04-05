@@ -1,5 +1,8 @@
-## What is it?
-This package is a collection of useful tools for analytics, statistics and data science.
+This is a collection of useful tools for analytics, statistics and data science. At the moment, only test modules are available:
+- calculator
+- statistical_tools
+## Installation
+```
+pip install dreamtim
+```
 
-## How to contact the autor?
-You can easily mail me: timofei.ryko@gmail.com (for collaboration, offers or just for fun). Also feel fre to contact me in telegram: @timofeiryko
