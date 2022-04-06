@@ -143,7 +143,6 @@ class Calculator:
         if self.show_value:
             print(self.__str__())
 
-        print(self.value)
         return self.value
 
     def reset(self) -> None:
