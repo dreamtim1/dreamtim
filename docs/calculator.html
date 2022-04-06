@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>dreamtim.calculator API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="This module contains only one class - Calculator …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,6 +22,182 @@
 <h1 class="title">Module <code>dreamtim.calculator</code></h1>
 </header>
 <section id="section-intro">
+<p>This module contains only one class - Calculator.</p>
+<p>Please note that usual floats are used here, not decimal,
+so this calculator is not suitable for ultra-precise calculations!</p>
+<p>To perform arithmetic operations, just create an instance:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; calc_obj = Calculator()
+&gt;&gt;&gt; calc_obj
+Calculator(value=0.0, show_value=False, show_operation=False, round_number=2)
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;This module contains only one class - Calculator.
+
+Please note that usual floats are used here, not decimal,
+so this calculator is not suitable for ultra-precise calculations!
+
+To perform arithmetic operations, just create an instance:
+&gt;&gt;&gt; calc_obj = Calculator()
+&gt;&gt;&gt; calc_obj
+Calculator(value=0.0, show_value=False, show_operation=False, round_number=2)
+&#34;&#34;&#34;
+
+
+class Calculator:
+    &#34;&#34;&#34;This class is an implementation of calculator,
+    which performs actions with a value inside its memory.
+
+    To start:
+    &gt;&gt;&gt; calc_obj = Calculator(5)
+
+    For arithmetic operations use methods:
+    &gt;&gt;&gt; calc_obj.add(3)
+    8.0
+
+    Such methods can get not only float, but also
+    int or str, that can be converted into float.
+
+    To check current status, use attributes:
+    &gt;&gt;&gt; calc_obj.value
+    8.0
+
+    To set up print messages and rounding, use attributes:
+    &gt;&gt;&gt; calc_obj.show_operation = True
+    &gt;&gt;&gt; calc_obj.round_number = 3
+
+    &gt;&gt;&gt; result = calc_obj.divide(3)
+    Divided by 3.000!
+    &gt;&gt;&gt; result
+    2.6666666666666665
+    &gt;&gt;&gt; print(calc_obj)
+    Calculator object. Current value: 2.667
+
+    Pay attention to the fact that you are passing
+    the correct types as an attributes, otherwise you can get errors!
+
+    Attributes:
+        value, float: &#34;memory&#34; of the calculator
+        show_value, bool: determines whether print messages about
+            the current value in the calculator when performing
+            arithmetic operations (default is False)
+        show_operation, bool: determines whether print messages
+            about the perfomed operation (default is False)
+        round_number, int: the number of decimal places in numbers
+            in the messages and in a string representation (default is 2)
+    &#34;&#34;&#34;
+
+    def __init__(
+            self, value = 0,
+            show_value: bool = False,
+            show_operation: bool = False,
+            round_number: int = 2) -&gt; None:
+        # Initialize an object with default values
+        self.value = float(value)
+        self.show_value = show_value
+        self.show_operation = show_operation
+        self.round_number = round_number
+
+    def __repr__(self) -&gt; str:
+        # Represent an object as a string, according to Python docs
+        attrs_str = &#39;, &#39;.join(f&#39;{key}={value}&#39; for key, value in self.__dict__.items())
+        return f&#39;Calculator({attrs_str})&#39;
+
+    def __str__(self) -&gt; str:
+        # Represent an object as a string for print etc
+        return f&#39;Calculator object. Current value:{self.value: .{self.round_number}f}&#39;
+
+    def add(self, added_value) -&gt; float:
+        &#34;&#34;&#34;Adds the passed number to the value of the calculator&#34;&#34;&#34;
+
+        added_value = float(added_value)
+        self.value += added_value
+
+        if self.show_operation:
+            print(f&#39;Added{added_value: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def substract(self, substracted_value) -&gt; float:
+        &#34;&#34;&#34;Subatracts the passed number from the value of the calculator&#34;&#34;&#34;
+
+        substracted_value = float(substracted_value)
+        self.value -= substracted_value
+
+        if self.show_operation:
+            print(f&#39;Substracted{substracted_value: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def multiply(self, multiplier) -&gt; float:
+        &#34;&#34;&#34;Multiplies the value of the calculator by the passed number&#34;&#34;&#34;
+
+        multiplier = float(multiplier)
+        self.value *= multiplier
+
+        if self.show_operation:
+            print(f&#39;Multiplied by{multiplier: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def divide(self, divider) -&gt; float:
+        &#34;&#34;&#34;Divides the value of the calculator by the passed number&#34;&#34;&#34;
+
+        divider = float(divider)
+        self.value /= divider
+
+        if self.show_operation:
+            print(f&#39;Divided by{divider: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def root(self, n):
+        &#34;&#34;&#34;Takes (passed number) root of the value of the calculator&#34;&#34;&#34;
+
+        n = float(n)
+        if self.value &gt; 0:
+            self.value = self.value ** (1 / n)
+        elif self.value &lt; 0:
+            self.value = -((-self.value) ** (1 / n))
+        else:
+            self.value = 0.0
+        
+        if self.show_operation:
+            print(f&#39;The root of the{n: .{self.round_number}f} degree has been taken!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        print(self.value)
+        return self.value
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;Resets the memory in the calculator:
+        &gt;&gt;&gt; calc_obj = Calculator(5)
+        &gt;&gt;&gt; calc_obj.reset()
+        &gt;&gt;&gt; calc_obj.value
+        0.0
+        &#34;&#34;&#34;
+        self.value = 0.0
+        if self.show_operation:
+            print(f&#39;The memory has been reset! Current value:{self.value: .{self.round_number}}&#39;)
+
+
+if __name__ == &#39;__main__&#39;:
+
+    import doctest
+    
+    print(doctest.testmod())</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -30,6 +206,351 @@
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="dreamtim.calculator.Calculator"><code class="flex name class">
+<span>class <span class="ident">Calculator</span></span>
+<span>(</span><span>value=0, show_value: bool = False, show_operation: bool = False, round_number: int = 2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class is an implementation of calculator,
+which performs actions with a value inside its memory.</p>
+<p>To start:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; calc_obj = Calculator(5)
+</code></pre>
+<p>For arithmetic operations use methods:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; calc_obj.add(3)
+8.0
+</code></pre>
+<p>Such methods can get not only float, but also
+int or str, that can be converted into float.</p>
+<p>To check current status, use attributes:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; calc_obj.value
+8.0
+</code></pre>
+<p>To set up print messages and rounding, use attributes:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; calc_obj.show_operation = True
+&gt;&gt;&gt; calc_obj.round_number = 3
+</code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; result = calc_obj.divide(3)
+Divided by 3.000!
+&gt;&gt;&gt; result
+2.6666666666666665
+&gt;&gt;&gt; print(calc_obj)
+Calculator object. Current value: 2.667
+</code></pre>
+<p>Pay attention to the fact that you are passing
+the correct types as an attributes, otherwise you can get errors!</p>
+<h2 id="attributes">Attributes</h2>
+<p>value, float: "memory" of the calculator
+show_value, bool: determines whether print messages about
+the current value in the calculator when performing
+arithmetic operations (default is False)
+show_operation, bool: determines whether print messages
+about the perfomed operation (default is False)
+round_number, int: the number of decimal places in numbers
+in the messages and in a string representation (default is 2)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Calculator:
+    &#34;&#34;&#34;This class is an implementation of calculator,
+    which performs actions with a value inside its memory.
+
+    To start:
+    &gt;&gt;&gt; calc_obj = Calculator(5)
+
+    For arithmetic operations use methods:
+    &gt;&gt;&gt; calc_obj.add(3)
+    8.0
+
+    Such methods can get not only float, but also
+    int or str, that can be converted into float.
+
+    To check current status, use attributes:
+    &gt;&gt;&gt; calc_obj.value
+    8.0
+
+    To set up print messages and rounding, use attributes:
+    &gt;&gt;&gt; calc_obj.show_operation = True
+    &gt;&gt;&gt; calc_obj.round_number = 3
+
+    &gt;&gt;&gt; result = calc_obj.divide(3)
+    Divided by 3.000!
+    &gt;&gt;&gt; result
+    2.6666666666666665
+    &gt;&gt;&gt; print(calc_obj)
+    Calculator object. Current value: 2.667
+
+    Pay attention to the fact that you are passing
+    the correct types as an attributes, otherwise you can get errors!
+
+    Attributes:
+        value, float: &#34;memory&#34; of the calculator
+        show_value, bool: determines whether print messages about
+            the current value in the calculator when performing
+            arithmetic operations (default is False)
+        show_operation, bool: determines whether print messages
+            about the perfomed operation (default is False)
+        round_number, int: the number of decimal places in numbers
+            in the messages and in a string representation (default is 2)
+    &#34;&#34;&#34;
+
+    def __init__(
+            self, value = 0,
+            show_value: bool = False,
+            show_operation: bool = False,
+            round_number: int = 2) -&gt; None:
+        # Initialize an object with default values
+        self.value = float(value)
+        self.show_value = show_value
+        self.show_operation = show_operation
+        self.round_number = round_number
+
+    def __repr__(self) -&gt; str:
+        # Represent an object as a string, according to Python docs
+        attrs_str = &#39;, &#39;.join(f&#39;{key}={value}&#39; for key, value in self.__dict__.items())
+        return f&#39;Calculator({attrs_str})&#39;
+
+    def __str__(self) -&gt; str:
+        # Represent an object as a string for print etc
+        return f&#39;Calculator object. Current value:{self.value: .{self.round_number}f}&#39;
+
+    def add(self, added_value) -&gt; float:
+        &#34;&#34;&#34;Adds the passed number to the value of the calculator&#34;&#34;&#34;
+
+        added_value = float(added_value)
+        self.value += added_value
+
+        if self.show_operation:
+            print(f&#39;Added{added_value: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def substract(self, substracted_value) -&gt; float:
+        &#34;&#34;&#34;Subatracts the passed number from the value of the calculator&#34;&#34;&#34;
+
+        substracted_value = float(substracted_value)
+        self.value -= substracted_value
+
+        if self.show_operation:
+            print(f&#39;Substracted{substracted_value: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def multiply(self, multiplier) -&gt; float:
+        &#34;&#34;&#34;Multiplies the value of the calculator by the passed number&#34;&#34;&#34;
+
+        multiplier = float(multiplier)
+        self.value *= multiplier
+
+        if self.show_operation:
+            print(f&#39;Multiplied by{multiplier: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def divide(self, divider) -&gt; float:
+        &#34;&#34;&#34;Divides the value of the calculator by the passed number&#34;&#34;&#34;
+
+        divider = float(divider)
+        self.value /= divider
+
+        if self.show_operation:
+            print(f&#39;Divided by{divider: .{self.round_number}f}!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        return self.value
+
+    def root(self, n):
+        &#34;&#34;&#34;Takes (passed number) root of the value of the calculator&#34;&#34;&#34;
+
+        n = float(n)
+        if self.value &gt; 0:
+            self.value = self.value ** (1 / n)
+        elif self.value &lt; 0:
+            self.value = -((-self.value) ** (1 / n))
+        else:
+            self.value = 0.0
+        
+        if self.show_operation:
+            print(f&#39;The root of the{n: .{self.round_number}f} degree has been taken!&#39;)
+        if self.show_value:
+            print(self.__str__())
+
+        print(self.value)
+        return self.value
+
+    def reset(self) -&gt; None:
+        &#34;&#34;&#34;Resets the memory in the calculator:
+        &gt;&gt;&gt; calc_obj = Calculator(5)
+        &gt;&gt;&gt; calc_obj.reset()
+        &gt;&gt;&gt; calc_obj.value
+        0.0
+        &#34;&#34;&#34;
+        self.value = 0.0
+        if self.show_operation:
+            print(f&#39;The memory has been reset! Current value:{self.value: .{self.round_number}}&#39;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="dreamtim.calculator.Calculator.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, added_value) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds the passed number to the value of the calculator</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, added_value) -&gt; float:
+    &#34;&#34;&#34;Adds the passed number to the value of the calculator&#34;&#34;&#34;
+
+    added_value = float(added_value)
+    self.value += added_value
+
+    if self.show_operation:
+        print(f&#39;Added{added_value: .{self.round_number}f}!&#39;)
+    if self.show_value:
+        print(self.__str__())
+
+    return self.value</code></pre>
+</details>
+</dd>
+<dt id="dreamtim.calculator.Calculator.divide"><code class="name flex">
+<span>def <span class="ident">divide</span></span>(<span>self, divider) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Divides the value of the calculator by the passed number</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def divide(self, divider) -&gt; float:
+    &#34;&#34;&#34;Divides the value of the calculator by the passed number&#34;&#34;&#34;
+
+    divider = float(divider)
+    self.value /= divider
+
+    if self.show_operation:
+        print(f&#39;Divided by{divider: .{self.round_number}f}!&#39;)
+    if self.show_value:
+        print(self.__str__())
+
+    return self.value</code></pre>
+</details>
+</dd>
+<dt id="dreamtim.calculator.Calculator.multiply"><code class="name flex">
+<span>def <span class="ident">multiply</span></span>(<span>self, multiplier) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Multiplies the value of the calculator by the passed number</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def multiply(self, multiplier) -&gt; float:
+    &#34;&#34;&#34;Multiplies the value of the calculator by the passed number&#34;&#34;&#34;
+
+    multiplier = float(multiplier)
+    self.value *= multiplier
+
+    if self.show_operation:
+        print(f&#39;Multiplied by{multiplier: .{self.round_number}f}!&#39;)
+    if self.show_value:
+        print(self.__str__())
+
+    return self.value</code></pre>
+</details>
+</dd>
+<dt id="dreamtim.calculator.Calculator.reset"><code class="name flex">
+<span>def <span class="ident">reset</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Resets the memory in the calculator:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; calc_obj = Calculator(5)
+&gt;&gt;&gt; calc_obj.reset()
+&gt;&gt;&gt; calc_obj.value
+0.0
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset(self) -&gt; None:
+    &#34;&#34;&#34;Resets the memory in the calculator:
+    &gt;&gt;&gt; calc_obj = Calculator(5)
+    &gt;&gt;&gt; calc_obj.reset()
+    &gt;&gt;&gt; calc_obj.value
+    0.0
+    &#34;&#34;&#34;
+    self.value = 0.0
+    if self.show_operation:
+        print(f&#39;The memory has been reset! Current value:{self.value: .{self.round_number}}&#39;)</code></pre>
+</details>
+</dd>
+<dt id="dreamtim.calculator.Calculator.root"><code class="name flex">
+<span>def <span class="ident">root</span></span>(<span>self, n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes (passed number) root of the value of the calculator</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def root(self, n):
+    &#34;&#34;&#34;Takes (passed number) root of the value of the calculator&#34;&#34;&#34;
+
+    n = float(n)
+    if self.value &gt; 0:
+        self.value = self.value ** (1 / n)
+    elif self.value &lt; 0:
+        self.value = -((-self.value) ** (1 / n))
+    else:
+        self.value = 0.0
+    
+    if self.show_operation:
+        print(f&#39;The root of the{n: .{self.round_number}f} degree has been taken!&#39;)
+    if self.show_value:
+        print(self.__str__())
+
+    print(self.value)
+    return self.value</code></pre>
+</details>
+</dd>
+<dt id="dreamtim.calculator.Calculator.substract"><code class="name flex">
+<span>def <span class="ident">substract</span></span>(<span>self, substracted_value) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Subatracts the passed number from the value of the calculator</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def substract(self, substracted_value) -&gt; float:
+    &#34;&#34;&#34;Subatracts the passed number from the value of the calculator&#34;&#34;&#34;
+
+    substracted_value = float(substracted_value)
+    self.value -= substracted_value
+
+    if self.show_operation:
+        print(f&#39;Substracted{substracted_value: .{self.round_number}f}!&#39;)
+    if self.show_value:
+        print(self.__str__())
+
+    return self.value</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -41,6 +562,21 @@
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="dreamtim" href="index.html">dreamtim</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="dreamtim.calculator.Calculator" href="#dreamtim.calculator.Calculator">Calculator</a></code></h4>
+<ul class="two-column">
+<li><code><a title="dreamtim.calculator.Calculator.add" href="#dreamtim.calculator.Calculator.add">add</a></code></li>
+<li><code><a title="dreamtim.calculator.Calculator.divide" href="#dreamtim.calculator.Calculator.divide">divide</a></code></li>
+<li><code><a title="dreamtim.calculator.Calculator.multiply" href="#dreamtim.calculator.Calculator.multiply">multiply</a></code></li>
+<li><code><a title="dreamtim.calculator.Calculator.reset" href="#dreamtim.calculator.Calculator.reset">reset</a></code></li>
+<li><code><a title="dreamtim.calculator.Calculator.root" href="#dreamtim.calculator.Calculator.root">root</a></code></li>
+<li><code><a title="dreamtim.calculator.Calculator.substract" href="#dreamtim.calculator.Calculator.substract">substract</a></code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

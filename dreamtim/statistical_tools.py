@@ -1,3 +1,5 @@
+"""This module contains different self-implemented statistical tools. It isn't documented good, because I am lazy ;)"""
+
 from typing import Iterable, Tuple, Sequence, Dict, List
 
 from collections import defaultdict
