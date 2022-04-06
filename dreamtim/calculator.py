@@ -1,3 +1,5 @@
+__docformat__ = "google"
+
 """This module contains only one class - Calculator.
 
 Please note that usual floats are used here, not decimal,
